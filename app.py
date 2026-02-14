@@ -85,7 +85,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- HEADER ---
-st.markdown(f"<h1 style='text-align: center;'>❤️ Ciao {NOME_LEI} ❤️</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center;'>❤️ Ciao Gio ❤️</h1>", unsafe_allow_html=True)
 st.markdown("---")
 
 # --- TIMER ---
@@ -104,7 +104,7 @@ with st.expander(f"💌 Leggi la lettera per te", expanded=False):
 st.markdown("---")
 
 # --- FOTO (VERSIONE DEBUGGING) ---
-st.markdown("<h3 style='text-align: center;'>📸 I nostri momenti</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>📸 noii</h3>", unsafe_allow_html=True)
 
 
 
@@ -167,7 +167,7 @@ with st.form("quiz_form"):
         risposte_utente.append(risposta)
         st.write("") 
     
-    submit_btn = st.form_submit_button("💌 VERIFICA RISPOSTE")
+    submit_btn = st.form_submit_button("💌 vediamo se hai fatto bene...")
 
     if submit_btn:
         punteggio = 0
@@ -183,14 +183,15 @@ with st.form("quiz_form"):
             st.session_state.errore_quiz = True
 
 if st.session_state.errore_quiz:
-    st.error(f"Ahi ahi! Qualche risposta è sbagliata! Riprova amore 😜")
+    st.error(f"Non mi ami abbastanza! Riprova😜")
 
 if st.session_state.quiz_superato:
     st.markdown("---")
     st.balloons()
-    st.markdown(f"<h1 style='text-align: center; color: green !important;'>BRAVISSIMA! 🎉</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: green !important;'>BRAVISSIMAAA! 🎉</h1>", unsafe_allow_html=True)
     st.image("https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif", use_container_width=True)
     st.success("🎁 HAI SBLOCCATO IL REGALO:")
     st.markdown(f"<div style='text-align: center; border: 3px solid #d60045; padding: 20px; border-radius: 15px; background-color: white; color: #d60045;'><h2>{MESSAGGIO_FINALE_SORPRESA}</h2></div>", unsafe_allow_html=True)
+
 
 

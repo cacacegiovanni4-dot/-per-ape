@@ -106,15 +106,7 @@ st.markdown("---")
 # --- FOTO (VERSIONE DEBUGGING) ---
 st.markdown("<h3 style='text-align: center;'>📸 I nostri momenti</h3>", unsafe_allow_html=True)
 
-# 1. CONTROLLO CARTELLA
-if os.path.exists("foto"):
-    files = os.listdir("foto")
-    st.info(f"📂 FILE TROVATI NELLA CARTELLA 'foto': {files}")
-    st.caption("⚠️ Controlla se i nomi qui sopra sono IDENTICI (maiuscole/minuscole) a quelli nella lista LISTA_FOTO nel codice.")
-else:
-    st.error("❌ ERRORE: La cartella 'foto' non esiste su GitHub! Hai caricato le foto sfuse?")
-    files_root = [f for f in os.listdir('.') if f.endswith(('.jpg', '.png', '.jpeg', '.JPG'))]
-    st.info(f"📂 File trovati nella cartella principale: {files_root}")
+
 
 # 2. MOSTRA LE FOTO (PROVA)
 if LISTA_FOTO:
@@ -200,4 +192,5 @@ if st.session_state.quiz_superato:
     st.image("https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif", use_container_width=True)
     st.success("🎁 HAI SBLOCCATO IL REGALO:")
     st.markdown(f"<div style='text-align: center; border: 3px solid #d60045; padding: 20px; border-radius: 15px; background-color: white; color: #d60045;'><h2>{MESSAGGIO_FINALE_SORPRESA}</h2></div>", unsafe_allow_html=True)
+
 

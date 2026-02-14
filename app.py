@@ -62,7 +62,7 @@ TESTO_LETTERA = """
 Zao crocca ti volevo solo dire che ti amo tantissimo e che sembra passato tanto ma è 
 ancora decisamente poco perchè io non vedo l'ora di sposarti ciao ti amo sei una bambina.
 """
-MESSAGGIO_FINALE_SORPRESA = "Ti amo sei la cosa più bella che mi sia capitata ❤️"
+MESSAGGIO_FINALE_SORPRESA = "BACINI INFINITIIIIIII❤️"
 
 # ==============================================================================
 # FINE CONFIGURAZIONE
@@ -192,6 +192,7 @@ if st.session_state.quiz_superato:
     st.image("https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif", use_container_width=True)
     st.success("🎁 HAI SBLOCCATO IL REGALO:")
     st.markdown(f"<div style='text-align: center; border: 3px solid #d60045; padding: 20px; border-radius: 15px; background-color: white; color: #d60045;'><h2>{MESSAGGIO_FINALE_SORPRESA}</h2></div>", unsafe_allow_html=True)
+
 
 
 

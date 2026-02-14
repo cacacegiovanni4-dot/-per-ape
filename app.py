@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+import os  # <--- AGGIUNTO PER VEDERE I FILE
 
 # ==============================================================================
 # 🐔 AREA CONFIGURAZIONE (MODIFICA QUI SOTTO) 🐔
@@ -44,7 +45,16 @@ LISTA_DOMANDE = [
 ]
 
 # 4. FOTO E CANZONE
-LISTA_FOTO = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"] 
+# IMPORTANTE: Qui prova a lasciare "foto/nomefile.jpg". 
+# Se non va, il codice sotto ti dirà COME si chiamano davvero i file.
+LISTA_FOTO = [
+    "foto/1.jpg", 
+    "foto/2.jpg", 
+    "foto/3.jpg", 
+    "foto/4.jpg", 
+    "foto/5.jpg", 
+    "foto/6.jpg"
+] 
 LINK_CANZONE = "https://www.youtube.com/watch?v=34oWyWjqp88" 
 
 # 5. TESTI
@@ -53,7 +63,7 @@ TESTO_LETTERA = """
 Zao crocca ti volevo solo dire che ti amo tantissimo e che sembra passato tanto ma è 
 ancora decisamente poco perchè io non vedo l'ora di sposarti ciao ti amo sei una bambina.
 """
-MESSAGGIO_FINALE_SORPRESA = "BACINI INFINITIIII TUTTI PER TEEE❤️"
+MESSAGGIO_FINALE_SORPRESA = "Ti amo sei la cosa più bella che mi sia capitata ❤️"
 
 # ==============================================================================
 # FINE CONFIGURAZIONE
@@ -61,82 +71,69 @@ MESSAGGIO_FINALE_SORPRESA = "BACINI INFINITIIII TUTTI PER TEEE❤️"
 
 st.set_page_config(page_title=f"Per {NOME_LEI} ❤️", page_icon="🥰")
 
-# --- CSS MIGLIORATO PER MOBILE ---
+# --- CSS MIGLIORATO ---
 st.markdown("""
     <style>
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
-        
-        .stApp { 
-            background-color: #ffeef2; 
-        }
-
-        h1, h2, h3, h4, h5, h6, p, span, div, label, .stMarkdown {
-            color: #590d22 !important; 
-        }
-
-        h1 {
-            color: #d60045 !important;
-            font-weight: 800 !important;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
-        }
-
-        .stRadio div[role='radiogroup'] > label {
-            background-color: rgba(255,255,255,0.8);
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 5px;
-            border: 1px solid #ff99ac;
-            color: #590d22 !important;
-        }
-
-        .stButton button {
-            background-color: #d60045 !important;
-            color: white !important;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 18px;
-            width: 100%;
-        }
+        .stApp { background-color: #ffeef2; }
+        h1, h2, h3, h4, h5, h6, p, span, div, label, .stMarkdown { color: #590d22 !important; }
+        h1 { color: #d60045 !important; font-weight: 800 !important; text-shadow: 1px 1px 0px rgba(255,255,255,0.5); }
+        .stRadio div[role='radiogroup'] > label { background-color: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px; margin-bottom: 5px; border: 1px solid #ff99ac; color: #590d22 !important; }
+        .stButton button { background-color: #d60045 !important; color: white !important; border-radius: 20px; font-weight: bold; font-size: 18px; width: 100%; }
     </style>
 """, unsafe_allow_html=True)
 
 # --- HEADER ---
-st.markdown(f"<h1 style='text-align: center;'>❤️ ZAO PATATONA ❤️</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center;'>❤️ Ciao {NOME_LEI} ❤️</h1>", unsafe_allow_html=True)
 st.markdown("---")
 
 # --- TIMER ---
 st.markdown("<h3 style='text-align: center;'>⏳ Stiamo insieme da...</h3>", unsafe_allow_html=True)
 start_date = datetime(ANNO, MESE, GIORNO)
 diff = datetime.now() - start_date
-
 col1, col2, col3 = st.columns(3)
 col1.metric("Giorni", diff.days)
 col2.metric("Ore", int(diff.seconds // 3600))
 col3.metric("Minuti", int((diff.seconds // 60) % 60))
-
 st.markdown("---")
 
 # --- LETTERA ---
 with st.expander(f"💌 Leggi la lettera per te", expanded=False):
     st.write(TESTO_LETTERA)
-
 st.markdown("---")
 
-# --- FOTO ---
-st.markdown("<h3 style='text-align: center;'>📸 le nostre fotooo</h3>", unsafe_allow_html=True)
+# --- FOTO (VERSIONE DEBUGGING) ---
+st.markdown("<h3 style='text-align: center;'>📸 I nostri momenti</h3>", unsafe_allow_html=True)
+
+# 1. CONTROLLO CARTELLA
+if os.path.exists("foto"):
+    files = os.listdir("foto")
+    st.info(f"📂 FILE TROVATI NELLA CARTELLA 'foto': {files}")
+    st.caption("⚠️ Controlla se i nomi qui sopra sono IDENTICI (maiuscole/minuscole) a quelli nella lista LISTA_FOTO nel codice.")
+else:
+    st.error("❌ ERRORE: La cartella 'foto' non esiste su GitHub! Hai caricato le foto sfuse?")
+    files_root = [f for f in os.listdir('.') if f.endswith(('.jpg', '.png', '.jpeg', '.JPG'))]
+    st.info(f"📂 File trovati nella cartella principale: {files_root}")
+
+# 2. MOSTRA LE FOTO (PROVA)
 if LISTA_FOTO:
-    tabs = st.tabs([f"Foto {i+1}" for i in range(len(LISTA_FOTO))])
-    for i, tab in enumerate(tabs):
-        tab.image(LISTA_FOTO[i], use_container_width=True) 
+    try:
+        tabs = st.tabs([f"Foto {i+1}" for i in range(len(LISTA_FOTO))])
+        for i, tab in enumerate(tabs):
+            file_path = LISTA_FOTO[i]
+            if os.path.exists(file_path):
+                tab.image(file_path, use_container_width=True)
+            else:
+                tab.error(f"❌ Impossibile trovare: {file_path}")
+    except Exception as e:
+        st.error(f"Errore nel caricamento: {e}")
 
 st.markdown("---")
 
-# --- MUSICA (FIX PER MOBILE) ---
+# --- MUSICA ---
 st.markdown("<h3 style='text-align: center;'>🎶 Play Me</h3>", unsafe_allow_html=True)
-
-# Logica per estrarre l'ID di YouTube in modo sicuro
 try:
     if "v=" in LINK_CANZONE:
         video_id = LINK_CANZONE.split("v=")[1].split("&")[0]
@@ -146,7 +143,6 @@ try:
         video_id = None
         
     if video_id:
-        # Usa HTML Iframe diretto invece di st.video (Carica meglio su mobile)
         st.markdown(f"""
             <div style="display: flex; justify-content: center;">
                 <iframe width="100%" height="250" src="https://www.youtube.com/embed/{video_id}" 
@@ -196,13 +192,12 @@ with st.form("quiz_form"):
             st.session_state.errore_quiz = True
 
 if st.session_state.errore_quiz:
-    st.error(f"mmmmm! Qualche risposta è sbagliata! Riprova patata 😜")
+    st.error(f"Ahi ahi! Qualche risposta è sbagliata! Riprova amore 😜")
 
 if st.session_state.quiz_superato:
     st.markdown("---")
     st.balloons()
     st.markdown(f"<h1 style='text-align: center; color: green !important;'>BRAVISSIMA! 🎉</h1>", unsafe_allow_html=True)
     st.image("https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif", use_container_width=True)
-    
-    st.success("🎁 HAI SBLOCCATO IL TUO REGALO:")
-    st.markdown(f"<div style='text-align: center; border: 3px solid #d60045; padding: 20px; border-radius: 15px; background-color: white; color: #d60045;'><h2>{MESSAGGIO_FINALE_SORPRESA}</h2></div>", unsafe_allow_html=True)
+    st.success("🎁 HAI SBLOCCATO IL REGALO:")
+    st.markdown(f"<div style='text-align: center; border: 3px solid #d60045; padding: 20px; border-radius: 15px; background-color: white; color: #d60045;'><h2>{MESSAGGIO_FINALE_SORPRESA}</h2></div>", unsafe_allow_html=True)-radius: 15px; background-color: white; color: #d60045;'><h2>{MESSAGGIO_FINALE_SORPRESA}</h2></div>", unsafe_allow_html=True)
